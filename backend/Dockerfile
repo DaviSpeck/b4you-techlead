@@ -2,15 +2,13 @@ FROM node:22.14.0
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY . .
+
+# Instala dependências já no ambiente do container (evita problemas com binários)
 RUN yarn install
 
-COPY prisma ./prisma
-COPY .env ./
-
+# Gera os clientes do Prisma
 RUN npx prisma generate
-
-COPY . .
 
 RUN yarn build
 

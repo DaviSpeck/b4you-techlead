@@ -1,2 +1,14 @@
-# b4you-techlead
-Repositório destinado à solução do desafio técnico para a posição de Tech Lead na empresa B4You, com instruções no link: https://b4you.notion.site/Teste-T-cnico-Tech-Lead-1ae0413ea54d80489c4adab650bcf0ee
+# Teste Técnico – Tech Lead | B4YOU
+
+Este repositório contém a solução proposta para o teste técnico da vaga de **Tech Lead** na empresa **B4YOU**.
+
+## Estrutura do Projeto
+
+```bash
+.
+├── backend/      # API com autenticação JWT, campanhas e usuários
+├── frontend/     # (em breve) Interface em React para consumo da API
+├── SCALING.md    # Arquitetura e estratégias de escalabilidade
+├── SECURITY.md   # Medidas de segurança aplicadas
+├── MONITORING.md # Estratégias e ferramentas de monitoramento
+└── README.md     # Este arquivo

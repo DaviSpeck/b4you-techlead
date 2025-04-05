@@ -9,4 +9,4 @@ services:
       - ./backend:/app
     environment:
       - PORT=3000
-    command: yarn start:dev
+    command: sh -c "npx prisma generate && yarn start:dev"
