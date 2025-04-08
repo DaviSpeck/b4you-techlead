@@ -21,9 +21,9 @@ async function bootstrap() {
   SwaggerModule.setup('api/docs', app, document);
 
   await app.enableCors({
-    origin: ['http://localhost:4200'], // ou '*' se for só ambiente de desenvolvimento
+    origin: ['http://localhost:3000'], // ou '*' se for só ambiente de desenvolvimento
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
 
   app.useGlobalPipes(

@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiNotFoundResponse, ApiOperation, ApiResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('Usuários')
 @Controller('users')
@@ -62,5 +63,17 @@ export class UsersController {
     @ApiNotFoundResponse({ description: 'Usuário não encontrado.' })
     remove(@Param('id') id: string): Promise<User> {
         return this.usersService.remove(+id);
+    }
+
+    @Patch(':id')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Atualiza o nome do usuário' })
+    @ApiResponse({ status: 200, description: 'Usuário atualizado com sucesso.' })
+    @ApiBadRequestResponse({ description: 'Dados inválidos.' })
+    @ApiUnauthorizedResponse({ description: 'Token inválido ou ausente.' })
+    @ApiNotFoundResponse({ description: 'Usuário não encontrado.' })
+    update(@Param('id') id: string, @Body() dto: UpdateUserDto): Promise<User> {
+        return this.usersService.update(+id, dto);
     }
 }

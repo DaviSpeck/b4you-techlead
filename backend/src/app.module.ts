@@ -15,7 +15,7 @@ import { CampaignsModule } from './campaigns/campaigns.module';
       throttlers: [
         {
           name: 'default',
-          limit: 10,
+          limit: 30,
           ttl: 60_000
         },
       ],

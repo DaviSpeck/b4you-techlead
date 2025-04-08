@@ -41,8 +41,8 @@ npx prisma migrate dev --name init
 yarn start:dev
 ```
 
-A API estará disponível em: [http://localhost:3000/api/v1](http://localhost:3000/api/v1)  
-Documentação Swagger: [http://localhost:3000/api/docs](http://localhost:3000/api/docs)
+A API estará disponível em: [http://localhost:7000/api/v1](http://localhost:7000/api/v1)  
+Documentação Swagger: [http://localhost:7000/api/docs](http://localhost:7000/api/docs)
 
 ## 🐳 Docker
 
@@ -60,7 +60,7 @@ Crie um arquivo `.env` com base no exemplo abaixo:
 DATABASE_URL="file:./dev.db"
 JWT_SECRET=supertokensecreto
 JWT_REFRESH_SECRET=refreshsecreto
-PORT=3000
+PORT=7000
 ```
 
 ## 📫 Desenvolvedor

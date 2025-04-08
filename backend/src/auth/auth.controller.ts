@@ -4,6 +4,7 @@ import { AuthDto } from './dto/auth.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -35,6 +36,16 @@ export class AuthController {
     @ApiResponse({ status: 200, description: 'Usuário autenticado' })
     @ApiUnauthorizedResponse({ description: 'Token ausente ou inválido' })
     getMe(@Request() req) {
-        return req.user;
+        return this.authService.getUserFromToken(req.user.userId);
+    }
+
+    @Post('change-password')
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @ApiOperation({ summary: 'Troca a senha do usuário logado' })
+    @ApiResponse({ status: 200, description: 'Senha atualizada com sucesso.' })
+    @ApiUnauthorizedResponse({ description: 'Senha atual inválida ou token ausente.' })
+    changePassword(@Request() req, @Body() dto: ChangePasswordDto) {
+        return this.authService.changePassword(req.user.userId, dto);
     }
 }

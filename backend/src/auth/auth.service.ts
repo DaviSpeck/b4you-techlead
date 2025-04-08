@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 import { AuthDto } from './dto/auth.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -91,4 +92,37 @@ export class AuthService {
             throw new UnauthorizedException('Refresh token inválido ou expirado');
         }
     }
+
+    async changePassword(userId: number, dto: ChangePasswordDto) {
+        const user = await this.prisma.user.findUnique({ where: { id: userId } });
+
+        if (!user) throw new UnauthorizedException('Usuário não encontrado');
+
+        const valid = await bcrypt.compare(dto.currentPassword, user.password);
+        if (!valid) throw new UnauthorizedException('Senha atual incorreta');
+
+        const hashedNewPassword = await bcrypt.hash(dto.newPassword, 10);
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: { password: hashedNewPassword },
+        });
+
+        return { message: 'Senha atualizada com sucesso.' };
+    }
+
+    async getUserFromToken(userId: number) {
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+        })
+
+        return user
+    }
+
 }
